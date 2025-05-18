@@ -1,0 +1,546 @@
+Genre,emotion,count
+acoustic,surprise,7
+acoustic,love,32
+acoustic,fear,46
+acoustic,anger,80
+acoustic,sadness,249
+acoustic,joy,264
+alt-country,surprise,2
+alt-country,love,17
+alt-country,fear,25
+alt-country,anger,45
+alt-country,sadness,108
+alt-country,joy,110
+alternative,surprise,35
+alternative,love,97
+alternative,fear,145
+alternative,anger,470
+alternative,joy,917
+alternative,sadness,953
+alternative rock,surprise,315
+alternative rock,love,1110
+alternative rock,fear,1714
+alternative rock,anger,4194
+alternative rock,joy,9405
+alternative rock,sadness,10636
+ambient,surprise,29
+ambient,love,122
+ambient,fear,134
+ambient,anger,407
+ambient,joy,803
+ambient,sadness,830
+black metal,surprise,3
+black metal,love,39
+black metal,fear,86
+black metal,anger,214
+black metal,joy,241
+black metal,sadness,403
+blues,surprise,83
+blues,fear,424
+blues,love,577
+blues,anger,1266
+blues,sadness,2690
+blues,joy,3311
+britpop,surprise,3
+britpop,love,24
+britpop,fear,40
+britpop,anger,62
+britpop,sadness,189
+britpop,joy,212
+chillout,surprise,2
+chillout,love,5
+chillout,fear,7
+chillout,anger,7
+chillout,sadness,34
+chillout,joy,62
+chillwave,surprise,5
+chillwave,fear,28
+chillwave,love,31
+chillwave,anger,80
+chillwave,sadness,171
+chillwave,joy,197
+christian,surprise,12
+christian,love,50
+christian,fear,52
+christian,anger,80
+christian,sadness,350
+christian,joy,533
+classic rock,surprise,48
+classic rock,fear,234
+classic rock,love,251
+classic rock,anger,452
+classic rock,sadness,1395
+classic rock,joy,1593
+classical,surprise,42
+classical,fear,190
+classical,love,204
+classical,anger,672
+classical,sadness,1318
+classical,joy,1427
+cloud rap,surprise,16
+cloud rap,love,41
+cloud rap,fear,75
+cloud rap,sadness,547
+cloud rap,joy,572
+cloud rap,anger,698
+comedy,surprise,14
+comedy,love,24
+comedy,fear,31
+comedy,sadness,188
+comedy,anger,197
+comedy,joy,396
+country,surprise,103
+country,fear,425
+country,love,683
+country,anger,1102
+country,sadness,3509
+country,joy,4184
+dance,surprise,39
+dance,fear,150
+dance,love,255
+dance,anger,473
+dance,sadness,813
+dance,joy,1498
+dancehall,surprise,6
+dancehall,fear,32
+dancehall,love,86
+dancehall,sadness,220
+dancehall,anger,361
+dancehall,joy,529
+death metal,surprise,4
+death metal,love,48
+death metal,fear,140
+death metal,joy,396
+death metal,anger,493
+death metal,sadness,879
+deathcore,surprise,2
+deathcore,love,9
+deathcore,fear,36
+deathcore,joy,140
+deathcore,anger,205
+deathcore,sadness,456
+disco,surprise,16
+disco,fear,75
+disco,anger,159
+disco,love,163
+disco,sadness,422
+disco,joy,657
+doom metal,surprise,4
+doom metal,love,44
+doom metal,fear,50
+doom metal,anger,97
+doom metal,joy,129
+doom metal,sadness,372
+dream pop,True,1
+dream pop,surprise,9
+dream pop,love,96
+dream pop,fear,108
+dream pop,anger,180
+dream pop,joy,545
+dream pop,sadness,714
+drum and bass,surprise,7
+drum and bass,love,47
+drum and bass,fear,73
+drum and bass,anger,256
+drum and bass,sadness,419
+drum and bass,joy,422
+dub,surprise,14
+dub,love,49
+dub,fear,53
+dub,anger,241
+dub,sadness,310
+dub,joy,458
+dubstep,surprise,5
+dubstep,love,23
+dubstep,fear,34
+dubstep,anger,86
+dubstep,sadness,211
+dubstep,joy,219
+electro,surprise,6
+electro,fear,34
+electro,love,39
+electro,anger,65
+electro,sadness,202
+electro,joy,257
+electronic,surprise,150
+electronic,love,804
+electronic,fear,854
+electronic,anger,2329
+electronic,sadness,4923
+electronic,joy,5634
+electropop,surprise,57
+electropop,fear,347
+electropop,love,373
+electropop,anger,734
+electropop,sadness,1886
+electropop,joy,2351
+emo,surprise,36
+emo,love,85
+emo,fear,196
+emo,anger,400
+emo,joy,873
+emo,sadness,1359
+emo rap,surprise,17
+emo rap,love,30
+emo rap,fear,60
+emo rap,anger,310
+emo rap,joy,334
+emo rap,sadness,502
+experimental,surprise,35
+experimental,love,115
+experimental,fear,172
+experimental,anger,441
+experimental,sadness,841
+experimental,joy,972
+folk,True,5
+folk,surprise,125
+folk,fear,706
+folk,love,772
+folk,anger,1613
+folk,sadness,4933
+folk,joy,4952
+funk,surprise,54
+funk,fear,204
+funk,love,316
+funk,anger,672
+funk,sadness,1225
+funk,joy,2042
+garage rock,surprise,15
+garage rock,love,52
+garage rock,fear,77
+garage rock,anger,145
+garage rock,joy,349
+garage rock,sadness,380
+gospel,surprise,18
+gospel,fear,65
+gospel,anger,159
+gospel,love,179
+gospel,sadness,557
+gospel,joy,870
+grime,surprise,5
+grime,love,19
+grime,fear,24
+grime,sadness,116
+grime,joy,196
+grime,anger,228
+grunge,surprise,15
+grunge,love,58
+grunge,fear,102
+grunge,anger,192
+grunge,joy,471
+grunge,sadness,557
+hard rock,pink,1
+hard rock,surprise,70
+hard rock,love,370
+hard rock,fear,447
+hard rock,anger,1112
+hard rock,joy,2702
+hard rock,sadness,2969
+hardcore,surprise,7
+hardcore,love,21
+hardcore,fear,49
+hardcore,anger,203
+hardcore,joy,236
+hardcore,sadness,439
+heavy metal,surprise,83
+heavy metal,love,399
+heavy metal,fear,650
+heavy metal,anger,1752
+heavy metal,joy,2801
+heavy metal,sadness,3430
+hip hop,thirst,1
+hip hop,confusion,1
+hip hop,True,1
+hip hop,Love,1
+hip hop,surprise,1677
+hip hop,love,7758
+hip hop,fear,8449
+hip hop,anger,42458
+hip hop,sadness,48794
+hip hop,joy,66127
+hip-hop,surprise,67
+hip-hop,love,223
+hip-hop,fear,270
+hip-hop,sadness,1261
+hip-hop,anger,2041
+hip-hop,joy,2293
+house,surprise,15
+house,love,96
+house,fear,101
+house,anger,208
+house,sadness,492
+house,joy,746
+indie,surprise,51
+indie,love,215
+indie,fear,323
+indie,anger,677
+indie,joy,1547
+indie,sadness,1779
+indie pop,surprise,98
+indie pop,love,430
+indie pop,fear,532
+indie pop,anger,1024
+indie pop,joy,2813
+indie pop,sadness,3096
+indie rock,surprise,205
+indie rock,love,720
+indie rock,fear,1128
+indie rock,anger,2171
+indie rock,joy,5389
+indie rock,sadness,6333
+industrial,surprise,15
+industrial,love,40
+industrial,fear,80
+industrial,anger,320
+industrial,joy,382
+industrial,sadness,590
+j-pop,surprise,11
+j-pop,fear,28
+j-pop,love,31
+j-pop,anger,124
+j-pop,sadness,184
+j-pop,joy,281
+jazz,surprise,118
+jazz,fear,457
+jazz,love,691
+jazz,anger,1427
+jazz,sadness,3072
+jazz,joy,4326
+k-pop,surprise,24
+k-pop,love,71
+k-pop,fear,78
+k-pop,anger,130
+k-pop,sadness,267
+k-pop,joy,581
+latin,surprise,5
+latin,fear,28
+latin,love,47
+latin,anger,113
+latin,sadness,243
+latin,joy,346
+lo-fi,surprise,31
+lo-fi,love,87
+lo-fi,fear,92
+lo-fi,anger,240
+lo-fi,joy,601
+lo-fi,sadness,641
+math rock,surprise,10
+math rock,love,11
+math rock,fear,40
+math rock,anger,90
+math rock,joy,117
+math rock,sadness,177
+melodic death metal,True,1
+melodic death metal,surprise,7
+melodic death metal,love,31
+melodic death metal,fear,83
+melodic death metal,anger,257
+melodic death metal,joy,285
+melodic death metal,sadness,601
+metal,True,1
+metal,surprise,71
+metal,love,372
+metal,fear,757
+metal,anger,2386
+metal,joy,3025
+metal,sadness,4425
+metalcore,surprise,22
+metalcore,love,79
+metalcore,fear,211
+metalcore,anger,474
+metalcore,joy,696
+metalcore,sadness,1740
+new wave,surprise,45
+new wave,love,182
+new wave,fear,265
+new wave,anger,529
+new wave,sadness,1274
+new wave,joy,1503
+nu metal,surprise,5
+nu metal,love,21
+nu metal,fear,82
+nu metal,anger,332
+nu metal,joy,395
+nu metal,sadness,643
+pop,pink,1
+pop,True,1
+pop,surprise,441
+pop,fear,2244
+pop,love,3190
+pop,anger,4972
+pop,sadness,13916
+pop,joy,18014
+pop punk,True,1
+pop punk,surprise,29
+pop punk,love,70
+pop punk,fear,135
+pop punk,anger,384
+pop punk,joy,862
+pop punk,sadness,1315
+pop rock,surprise,167
+pop rock,fear,861
+pop rock,love,933
+pop rock,anger,1738
+pop rock,sadness,5444
+pop rock,joy,5839
+post-hardcore,True,1
+post-hardcore,surprise,28
+post-hardcore,love,77
+post-hardcore,fear,223
+post-hardcore,anger,439
+post-hardcore,joy,839
+post-hardcore,sadness,1676
+post-punk,surprise,30
+post-punk,love,102
+post-punk,fear,158
+post-punk,anger,388
+post-punk,joy,728
+post-punk,sadness,932
+power metal,surprise,6
+power metal,love,50
+power metal,fear,112
+power metal,anger,275
+power metal,joy,435
+power metal,sadness,506
+progressive metal,surprise,27
+progressive metal,love,88
+progressive metal,fear,262
+progressive metal,anger,465
+progressive metal,joy,751
+progressive metal,sadness,1495
+progressive rock,pink,1
+progressive rock,surprise,65
+progressive rock,love,285
+progressive rock,fear,528
+progressive rock,anger,848
+progressive rock,joy,2396
+progressive rock,sadness,2648
+psychedelic,surprise,4
+psychedelic,love,11
+psychedelic,fear,12
+psychedelic,anger,26
+psychedelic,joy,80
+psychedelic,sadness,91
+psychedelic rock,surprise,53
+psychedelic rock,fear,245
+psychedelic rock,love,276
+psychedelic rock,anger,599
+psychedelic rock,sadness,1523
+psychedelic rock,joy,1854
+punk,True,1
+punk,surprise,73
+punk,love,249
+punk,fear,450
+punk,anger,1578
+punk,joy,2366
+punk,sadness,2812
+punk rock,True,1
+punk rock,surprise,41
+punk rock,love,156
+punk rock,fear,274
+punk rock,anger,878
+punk rock,joy,1365
+punk rock,sadness,1720
+rap,True,1
+rap,surprise,109
+rap,love,378
+rap,fear,486
+rap,sadness,2510
+rap,anger,3980
+rap,joy,4284
+reggae,surprise,51
+reggae,fear,207
+reggae,love,306
+reggae,sadness,1330
+reggae,anger,1442
+reggae,joy,2424
+reggaeton,love,1
+reggaeton,sadness,6
+reggaeton,anger,6
+reggaeton,joy,15
+rnb,surprise,22
+rnb,fear,94
+rnb,love,180
+rnb,anger,226
+rnb,sadness,642
+rnb,joy,868
+rock,True,1
+rock,pink,1
+rock,surprise,613
+rock,love,2927
+rock,fear,3317
+rock,anger,8186
+rock,sadness,19587
+rock,joy,21038
+screamo,surprise,8
+screamo,love,18
+screamo,fear,51
+screamo,anger,71
+screamo,joy,174
+screamo,sadness,361
+shoegaze,surprise,18
+shoegaze,love,90
+shoegaze,fear,99
+shoegaze,anger,157
+shoegaze,joy,554
+shoegaze,sadness,655
+soul,surprise,135
+soul,fear,517
+soul,love,915
+soul,anger,1092
+soul,sadness,3111
+soul,joy,4374
+soundtrack,surprise,32
+soundtrack,fear,116
+soundtrack,love,123
+soundtrack,anger,396
+soundtrack,sadness,832
+soundtrack,joy,888
+swing,surprise,17
+swing,fear,98
+swing,love,196
+swing,anger,330
+swing,sadness,594
+swing,joy,942
+synthpop,surprise,64
+synthpop,love,325
+synthpop,fear,404
+synthpop,anger,910
+synthpop,sadness,2292
+synthpop,joy,2391
+techno,surprise,6
+techno,love,31
+techno,fear,33
+techno,anger,131
+techno,sadness,183
+techno,joy,258
+thrash metal,surprise,7
+thrash metal,love,44
+thrash metal,fear,156
+thrash metal,joy,404
+thrash metal,anger,540
+thrash metal,sadness,788
+trance,surprise,20
+trance,fear,83
+trance,love,84
+trance,anger,281
+trance,sadness,490
+trance,joy,701
+trap,surprise,97
+trap,love,349
+trap,fear,448
+trap,sadness,2603
+trap,joy,3781
+trap,anger,4720
+trip-hop,surprise,4
+trip-hop,fear,22
+trip-hop,love,27
+trip-hop,anger,60
+trip-hop,sadness,114
+trip-hop,joy,174
+worship,anger,3
+worship,surprise,7
+worship,fear,9
+worship,love,17
+worship,sadness,50
+worship,joy,240
