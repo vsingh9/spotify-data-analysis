@@ -14,8 +14,12 @@ features = [
 assembler = VectorAssembler(inputCols=features, outputCol="features_unscaled")
 scaler = StandardScaler(inputCol="features_unscaled", outputCol="features", wit>
 
-lr = LinearRegression(featuresCol="features", labelCol="popularity")
+lr = LinearRegression(featuresCol="features", labelCol="Popularity")
 
 pipeline = Pipeline(stages=[assembler, scaler, lr])
 model = pipeline.fit(df_clean)
 lr_model = model.stages[-1]
+
+print("\nFeature Importances (Linear Regression Coefficients):")
+for coef, feat in sorted(zip(lr_model.coefficients, features), key=lambda x: ab>
+    print(f"{feat:20}: {coef:.4f}")
