@@ -11,9 +11,11 @@ spark = SparkSession.builder \
         .appName("Spotify Analysis Task 5") \
         .getOrCreate()
 
+start_time = time.time()
+
 spark.sparkContext.setLogLevel("WARN")
 
-spark.conf.set("spark.sql.debug.maxToStringFields", 9) 
+spark.conf.set("spark.sql.debug.maxToStringFields", 9)
 
 df = spark.read.csv("updated_cleaned_dataset.csv", header=True, inferSchema=True)
 
@@ -43,10 +45,12 @@ coef_data["AbsCoeff"] = coef_data["Coefficient"].abs()
 coef_data.sort_values("AbsCoeff", ascending=False, inplace=True)
 
 df.write.csv("feature_importance_output", header=True, mode="overwrite")
-                                                                                                                                                                                                         
+
 plt.barh(coef_data["Feature"], coef_data["Coefficient"])
 plt.xlabel("Coefficient Value")
 plt.title("Feature Importance in Predicting Song Popularity")
 plt.grid(True)
 plt.savefig("feature_importance.png")
 plt.show()
+
+print(f"\nTotal script runtime: {time.time() - start_time:.2f} seconds")
