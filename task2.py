@@ -12,9 +12,7 @@ spark = SparkSession.builder \
 spark.sparkContext.setLogLevel("WARN")
 
 # uploading the dataset
-df = spark.read.csv("/Users/emily/Desktop/cleaned_spotify_dataset_1.csv/updated_cleaned_dataset.csv",
-    header = True,
-    inferSchema = True)
+df = spark.read.csv("updated_cleaned_dataset.csv", header = True,inferSchema = True)
 
 #to found out the distinct genre type (explode each comma-separed genre)
 one_genre = df.select(
