@@ -6,6 +6,7 @@ import logging
 logger = logging.getLogger('py4j')
 logger.setLevel(logging.ERROR)
 
+# Task 3 start
 def get_spark_session(app_name):
     spark = SparkSession.builder.appName(app_name).getOrCreate()
     spark.sparkContext.setLogLevel("ERROR")
@@ -48,4 +49,4 @@ yearly_counts.coalesce(1).write.mode("overwrite").option("header", "true").csv("
 
 # ---------- Total Time ----------
 print(f"\nTotal script runtime: {time.time() - start_time:.2f} seconds")
-# compile all tasks here in the end
+# Task 3 end
