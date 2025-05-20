@@ -2,10 +2,10 @@ from pyspark.sql.functions import split, explode, trim
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import avg, round, countDistinct
 
+# Spark Analysis for the avg popularity of (non)explicit songs per genre
 spark = SparkSession.builder \
     .appName("ExplicitSongsPopularity") \
     .getOrCreate()
-
 df = spark.read.csv("cleaned_spotify_dataset.csv", header=True, inferSchema=True)
 df_split = df.withColumn("genre", explode(split("genre", ","))) \
              .withColumn("genre", trim("genre"))  # Remove extra spaces
@@ -18,4 +18,8 @@ genre_popularity = df_split.groupBy("genre", "explicit") \
     .join(genres_with_both, on="genre") \
     .orderBy("genre", "explicit")
 
-genre_popularity.show(truncate=False)# task 3 - are there noticeable trends in the tempo or energy of songs from different time periods?
+genre_popularity.show(truncate=False)
+genre_popularity.coalesce(1) \
+    .write.mode("overwrite") \
+    .option("header", "true") \
+    .csv("genre_popularity_explicit")
