@@ -1,6 +1,14 @@
 from pyspark.sql.functions import split, explode, trim
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import avg, round, countDistinct
+import pandas as pd
+
+
+df = pd.read_csv("updated_cleaned_dataset.csv")
+# Calculate average popularity per explicit category
+avg_popularity = df.groupby('Explicit')['Popularity'].mean()
+
+print(avg_popularity)
 
 # Spark Analysis for the avg popularity of (non)explicit songs per genre
 spark = SparkSession.builder \
