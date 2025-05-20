@@ -4,6 +4,10 @@ from pyspark.ml.regression import LinearRegression
 from pyspark.ml import Pipeline
 from pyspark.sql import SparkSession
 
+spark = SparkSession.builder \
+        .appName("Spotify Analysis Task 5") \
+        .getOrCreate()
+
 df = spark.read.csv("updated_cleaned_dataset.csv", header=True, inferSchema=Tru>
 
 features = [
