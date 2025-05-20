@@ -8,7 +8,7 @@ spark = SparkSession.builder \
         .appName("Spotify Analysis Task 5") \
         .getOrCreate()
 
-df = spark.read.csv("updated_cleaned_dataset.csv", header=True, inferSchema=Tru>
+df = spark.read.csv("updated_cleaned_dataset.csv", header=True, inferSchema=True)
 
 features = [
     "Genre", "Tempo", "Explicit", "Energy", "Danceability",
