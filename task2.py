@@ -12,7 +12,7 @@ spark = SparkSession.builder \
 spark.sparkContext.setLogLevel("WARN")
 
 # uploading the dataset
-df = spark.read.csv("updated_cleaned_dataset.csv", header = True,inferSchema = True)
+df = spark.read.csv("updated_cleaned_dataset.csv", header = True, inferSchema = True)
 
 #to found out the distinct genre type (explode each comma-separed genre)
 one_genre = df.select(
@@ -51,11 +51,8 @@ top10 = genre_stats.orderBy(F.desc("avg_popularity")).limit(10)
 print("\nTop 10 genres by average popularity:\n")
 top10.show(truncate=False)
 
-
 # convert to pandas for visulization 
 plot1 = top10.toPandas().set_index("genre")
-    
- 
 # Plot a bar chart
 plt.figure()
 plot1['avg_popularity'].plot(kind='bar')
@@ -67,22 +64,20 @@ plt.tight_layout()
 plt.show()
     
 #find out the average popularity for each year and rank the genre for the top 10 highest avg_popularity
-exploded = df.select(
+genre_by_year = df.select(
 	"year",
 	F.explode(F.split(F.col("Genre"),",")).alias("genre"),
 	F.col("Popularity").cast("double").alias("popularity")
 ).withColumn("genre", F.trim(F.col("genre")))
 
-
 year_genre_stats = (
-    exploded
+    genre_by_year
         .groupBy("year", "Genre")
         .agg(
             F.round(F.avg("Popularity"), 2).alias("avg_popularity"),  
             F.count("*").alias("track_count")                         
              )  
     )
-    
 
 # filter out group that don't have much data (less than 5 tracks)
 filtered_stats = year_genre_stats.filter(F.col("track_count") >= 5)
@@ -123,16 +118,15 @@ peaks_for_genre = (
       .select(
         "genre",
         F.col("maxrec.year").alias("peak_year"),
-        F.col("maxrec.avg_popularity").alias("peak_pop")
+        F.col("maxrec.avg_popularity").alias("peak_popularity")
       )
    )
 peaks_for_genre.show(truncate=False)
 
-   
 # bar plox
 plot2 = peaks_for_genre.toPandas().set_index("genre")
 plt.figure()
-ax = plot2["peak_pop"].plot(kind="bar", edgecolor="black")
+ax = plot2["peak_popularity"].plot(kind="bar", edgecolor="black")
 plt.xlabel("Genre")
 plt.ylabel("Peak Average Popularity")
 plt.title("Top-10 Genres: Peak Year & Popularity")
@@ -141,15 +135,12 @@ plt.xticks(rotation=45, ha="right")
 for i, (genre, row) in enumerate(plot2.iterrows()):
     	ax.text(
         	i, 
-        	row["peak_pop"] + 0.5,            
+        	row["peak_popularity"] + 0.5,            
         	str(int(row["peak_year"])),      
         	ha="center", va="bottom"
     	)
 plt.tight_layout()
-
 plt.show()
-
-
 
 # track the average popularity for each year
 peaks_for_overall = (
