@@ -30,13 +30,7 @@ def main():
     print(f"There are total of {count} different genres")
     print() #newline
 
-
-
-    # count how many "k-pop"
-    kpop = df.filter(F.col("Genre").contains("k-pop")).count()
-    print(f"Number of tracks with ‘k-hop’ in Genre: {kpop}")
-
-   
+	
     # add a new column call "year" of the Release Date
     df = df.withColumn("year",F.year("Release Date"))
 
@@ -193,18 +187,6 @@ def main():
     plt.tight_layout()
     plt.show()
 
-    #heatmap
-    plt.figure()
-    plt.imshow(pivot.T, aspect="auto")
-    plt.colorbar(label="Average Popularity")
-    plt.xticks(range(len(pivot.index)), pivot.index, rotation=90)
-    plt.yticks(range(len(pivot.columns)), pivot.columns)
-    plt.xlabel("Year")
-    plt.ylabel("Genre")
-    plt.title("Popularity Heatmap for Top-10 Genres Over Time")
-    plt.tight_layout()
-    plt.show()
-    
     spark.stop()
 if __name__ == "__main__":
     main()
