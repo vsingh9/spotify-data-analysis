@@ -21,7 +21,7 @@ scaler = StandardScaler(inputCol="features_unscaled", outputCol="features", wit>
 lr = LinearRegression(featuresCol="features", labelCol="Popularity")
 
 pipeline = Pipeline(stages=[assembler, scaler, lr])
-model = pipeline.fit(df_clean)
+model = pipeline.fit(df)
 lr_model = model.stages[-1]
 
 print("\nFeature Importances (Linear Regression Coefficients):")
