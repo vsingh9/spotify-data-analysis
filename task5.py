@@ -14,12 +14,12 @@ spark = SparkSession.builder \
 df = spark.read.csv("updated_cleaned_dataset.csv", header=True, inferSchema=True)
 
 genre_indexer = StringIndexer(inputCol="Genre", outputCol="Genre_index", handleInvalid="skip")
-explicit_indexer = StringIndexer(inputCol="Explicit", outputCol="Explicit_index", handleInvali>
+explicit_indexer = StringIndexer(inputCol="Explicit", outputCol="Explicit_index", handleInvalid="skip")
 
-features = ["Genre_index", "Tempo", "Explicit_index", "Energy", "Danceability", "Positiveness">
+features = ["Genre_index", "Tempo", "Explicit_index", "Energy", "Danceability", "Positiveness", "Liveness", "Good for Party", "Good for Social Gatherings"]
 
 assembler = VectorAssembler(inputCols=features, outputCol="features_unscaled")
-scaler = StandardScaler(inputCol="features_unscaled", outputCol="features", withMean=True, wit>
+scaler = StandardScaler(inputCol="features_unscaled", outputCol="features", withMean=True, withStd=True)
 
 lr = LinearRegression(featuresCol="features", labelCol="Popularity")
 
@@ -28,9 +28,8 @@ model = pipeline.fit(df)
 lr_model = model.stages[-1]
 
 print("\nFeature Importances (Linear Regression Coefficients):")
-for coef, feat in sorted(zip(lr_model.coefficients, features), key=lambda x: abs(x[0]), revers>
+for coef, feat in sorted(zip(lr_model.coefficients, features), key=lambda x: abs(x[0]), reverse=True):
     print(f"{feat:20}: {coef:.4f}")
-                         
 coef_data = pd.DataFrame({
     "Feature": features,
     "Coefficient": [float(c) for c in lr_model.coefficients]
@@ -45,4 +44,5 @@ plt.xlabel("Coefficient Value")
 plt.title("Feature Importance in Predicting Song Popularity")
 plt.grid(True)
 plt.tight_layout()
+plt.savefig("feature_importance.png")
 plt.show()
