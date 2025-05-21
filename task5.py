@@ -1,56 +1,57 @@
 # task 5 - what are the most significant features (e.g., tempo, energy, danceability) that predict a song’s popularity?
-from pyspark.ml.feature import VectorAssembler, StandardScaler, StringIndexer
-from pyspark.ml.regression import LinearRegression
-from pyspark.ml import Pipeline
 from pyspark.sql import SparkSession
-
+from pyspark.sql.functions import corr
 import matplotlib.pyplot as plt
 import pandas as pd
+import time
 
 spark = SparkSession.builder \
-        .appName("Spotify Analysis Task 5") \
-        .getOrCreate()
+    .appName("Spotify Correlation Task 5") \
+    .getOrCreate()
 
-start_time = time.time()
-
+start_time_task5 = time.time()
 spark.sparkContext.setLogLevel("WARN")
-
 spark.conf.set("spark.sql.debug.maxToStringFields", 9)
 
 df = spark.read.csv("updated_cleaned_dataset.csv", header=True, inferSchema=True)
 
+from pyspark.ml.feature import StringIndexer
 genre_indexer = StringIndexer(inputCol="Genre", outputCol="Genre_index", handleInvalid="skip")
 explicit_indexer = StringIndexer(inputCol="Explicit", outputCol="Explicit_index", handleInvalid="skip")
 
-features = ["Genre_index", "Tempo", "Explicit_index", "Energy", "Danceability", "Positiveness", "Liveness", "Good for Party", "Good for Social Gatherings"]
+df = genre_indexer.fit(df).transform(df)
+df = explicit_indexer.fit(df).transform(df)
 
-assembler = VectorAssembler(inputCols=features, outputCol="features_unscaled")
-scaler = StandardScaler(inputCol="features_unscaled", outputCol="features", withMean=True, withStd=True)
+features = [
+    "Genre_index", "Tempo", "Explicit_index", "Energy", "Danceability",
+    "Positiveness", "Liveness", "Good for Party", "Good for Social Gatherings"
+]
 
-lr = LinearRegression(featuresCol="features", labelCol="Popularity")
+correlations = []
+print("\nFeature Correlations (Pearson r with Popularity):")
+for feat in features:
+    cor_val = df.stat.corr(feat, "Popularity")
+    correlations.append((feat, cor_val))
+    print(f"{feat:25}: {cor_val:.4f}")
 
-pipeline = Pipeline(stages=[genre_indexer, explicit_indexer, assembler, scaler, lr])
-model = pipeline.fit(df)
-lr_model = model.stages[-1]
+for feat in features:
+    cor_val = df.stat.corr(feat, "Popularity")
+    correlations.append((feat, cor_val))
 
-print("\nFeature Importances (Linear Regression Coefficients):")
-for coef, feat in sorted(zip(lr_model.coefficients, features), key=lambda x: abs(x[0]), reverse=True):
-    print(f"{feat:20}: {coef:.4f}")
-coef_data = pd.DataFrame({
-    "Feature": features,
-    "Coefficient": [float(c) for c in lr_model.coefficients]
-})
-
+coef_data = pd.DataFrame(correlations, columns=["Feature", "Coefficient"])
 coef_data["AbsCoeff"] = coef_data["Coefficient"].abs()
-coef_data.sort_values("AbsCoeff", ascending=False, inplace=True)
+coef_data.sort_values("AbsCoeff", ascending=True, inplace=True)
 
-df.write.csv("feature_importance_output", header=True, mode="overwrite")
+coef_data.to_csv("feature_importance_correlation.csv", index=False)
 
-plt.barh(coef_data["Feature"], coef_data["Coefficient"])
-plt.xlabel("Coefficient Value")
-plt.title("Feature Importance in Predicting Song Popularity")
+plt.figure(figsize=(10, 6))
+plt.barh(coef_data["Feature"], coef_data["Coefficient"], color="steelblue")
+plt.axvline(0, color="gray", linestyle="--")
+plt.xlabel("Pearson Correlation with Popularity")
+plt.title("Feature Correlation with Song Popularity")
 plt.grid(True)
-plt.savefig("feature_importance.png")
+plt.tight_layout()
+plt.savefig("feature_correlation.png")
 plt.show()
 
-print(f"\nTotal script runtime: {time.time() - start_time:.2f} seconds")
+print(f"\nTotal script runtime: {time.time() - start_time_task5:.2f} seconds")
