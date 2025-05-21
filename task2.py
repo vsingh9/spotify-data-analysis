@@ -1,4 +1,5 @@
 # task 2 - how has the popularity of different music genres changed over time?
+import time
 from pyspark.sql import SparkSession
 from pyspark.sql import functions as F
 from pyspark.sql.window import Window
@@ -7,12 +8,17 @@ import matplotlib.pyplot as plt
 spark = SparkSession.builder \
     .appName("GenrePopularityOverTime") \
     .getOrCreate()
-   
+ 
+# start overall timer 
+start_time_task2 = time.time()
+  
 # remove all the other message beside the output 
 spark.sparkContext.setLogLevel("WARN")
 
 # uploading the dataset
-df = spark.read.csv("updated_cleaned_dataset.csv", header = True, inferSchema = True)
+df = spark.read.csv("/Users/emily/Desktop/cleaned_spotify_dataset_1.csv/updated_cleaned_dataset.csv",
+    header = True,
+    inferSchema = True)
 
 #to found out the distinct genre type (explode each comma-separed genre)
 one_genre = df.select(
@@ -168,3 +174,5 @@ plt.title("Popularity Over Time for Top-10 Genres")
 plt.legend(loc="best", bbox_to_anchor=(1.02, 1))
 plt.tight_layout()
 plt.show()
+
+print(f"Task 2 runtime: {time.time() - start_time_task2:.2f} seconds")
