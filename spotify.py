@@ -2,21 +2,28 @@ import time
 from pyspark.sql.functions import split, explode, trim, col, year, to_date, count, avg, round, countDistinct, corr
 from pyspark.sql import SparkSession
 from pyspark.sql import functions as F
+from pyspark.sql.types import FloatType
 from pyspark.sql.window import Window
+from distutils.version import LooseVersion
 import pandas as pd
 import logging
 import matplotlib.pyplot as plt
 logger = logging.getLogger('py4j')
 logger.setLevel(logging.ERROR)
 
-# Task 2 start 
+# ---------------------------------------------------------------- TASK 1 ----------------------------------------------------------------
+# task 1 - what is the distribution of emotions across different music genres?
+
+
+# ---------------------------------------------------------------- TASK 2 ----------------------------------------------------------------
+# task 2 - how has the popularity of different music genres changed over time?
 spark = SparkSession.builder \
     .appName("GenrePopularityOverTime") \
     .getOrCreate()
  
 # start overall timer 
 start_time_task2 = time.time()
-  
+
 # remove all the other message beside the output 
 spark.sparkContext.setLogLevel("WARN")
 
@@ -29,8 +36,8 @@ df = spark.read.csv("/Users/emily/Desktop/cleaned_spotify_dataset_1.csv/updated_
 one_genre = df.select(
 	"*",
 	F.explode(F.split(F.col("Genre"), ",")).alias("single_genre")
-	).withColumn("single_genre", F.trim(F.col("single_genre")))  # remove white spaces
-    
+	).withColumn("single_genre", F.trim(F.col("single_genre"))) # remove white spaces
+
 distinct_genres = one_genre.select("single_genre").distinct()
 count = distinct_genres.count()
 distinct_genres.show(count,truncate=False)
@@ -73,7 +80,7 @@ plt.title('Top 10 Genres by Average Popularity')
 plt.xticks(rotation=45, ha='right')
 plt.tight_layout()
 plt.show()
-    
+
 #find out the average popularity for each year and rank the genre for the top 10 highest avg_popularity
 genre_by_year = df.select(
 	"year",
@@ -85,9 +92,9 @@ year_genre_stats = (
     genre_by_year
         .groupBy("year", "Genre")
         .agg(
-            F.round(F.avg("Popularity"), 2).alias("avg_popularity"),  
-            F.count("*").alias("track_count")                         
-             )  
+            F.round(F.avg("Popularity"), 2).alias("avg_popularity"),
+            F.count("*").alias("track_count")
+             )
     )
 
 # filter out group that don't have much data (less than 5 tracks)
@@ -99,14 +106,14 @@ ranked = filtered_stats.withColumn("rank", F.row_number().over(w))
 
 #filter the top 5 most-common genres for each year 
 top5_genres = ranked.filter(F.col("rank") <= 5)
-    
+
 table = top5_genres.select("year",
             "Genre",
             "avg_popularity",
             "track_count",
             "rank"
     )
-    
+
 # displaying the table 
 table.orderBy("year", "rank").show(100, truncate=False)
 
@@ -146,8 +153,8 @@ plt.xticks(rotation=45, ha="right")
 for i, (genre, row) in enumerate(plot2.iterrows()):
     	ax.text(
         	i, 
-        	row["peak_popularity"] + 0.5,            
-        	str(int(row["peak_year"])),      
+        	row["peak_popularity"] + 0.5,
+        	str(int(row["peak_year"])),
         	ha="center", va="bottom"
     	)
 plt.tight_layout()
@@ -161,11 +168,11 @@ peaks_for_overall = (
         .select("genre","year","avg_popularity")
         .orderBy(F.desc("avg_popularity"))
     )
-    
+
 print("For each top-10 genre, the average popularity for each year:")
 peaks_for_overall.show(truncate=False)
 
-plot3 = yearly_top10.select("genre","year","avg_popularity").toPandas()   
+plot3 = yearly_top10.select("genre","year","avg_popularity").toPandas()
 pivot = plot3.pivot(index="year", columns="genre", values="avg_popularity").sort_index()
 
 # line graph
@@ -180,9 +187,9 @@ plt.legend(loc="best", bbox_to_anchor=(1.02, 1))
 plt.tight_layout()
 plt.show()
 print(f"Task 2 runtime: {time.time() - start_time_task2:.2f} seconds")
-# Task 2 end 
 
-# Task 3 start
+# ---------------------------------------------------------------- TASK 3 ----------------------------------------------------------------
+# task 3 - how has the number of explicit songs changed over time? are explicit songs more or less popular than non-explicit songs in the same genre? are explicit songs more or less popular than non-explicit songs in general? 
 def get_spark_session(app_name):
     spark = SparkSession.builder.appName(app_name).getOrCreate()
     spark.sparkContext.setLogLevel("ERROR")
@@ -225,11 +232,76 @@ yearly_counts.coalesce(1).write.mode("overwrite").option("header", "true").csv("
 
 # ---------- Total Time ----------
 print(f"\nTotal script runtime: {time.time() - start_time:.2f} seconds")
-# Task 3 end
 
+# ---------------------------------------------------------------- TASK 4 ----------------------------------------------------------------
+# task 4 - what emotional tones are associated with songs that are considered “good for running,” “good for work/study,” and “good for relaxation/meditation”?
+start_time_task4 = time.time()
 
-#Task 5 start
+spark = SparkSession.builder \
+        .appName("Spotify Analysis Task 4") \
+        .getOrCreate()
 
+df = spark.read.csv("updated_cleaned_dataset.csv", header = True, inferSchema = True)
+
+# df.show(1, truncate=False)
+
+# perform further data cleaning to handle field overflows and data types
+clean_df = df.filter((col("emotion") == "joy") | (col("emotion") == "love") | (col("emotion") == "anger") | (col("emotion") == "fear") | (col("emotion") == "surprised") | (col("emotion") == "sadness"))
+clean_df = clean_df.withColumn('Tempo', clean_df['Tempo'].cast(FloatType()))
+
+# use filter transformation to find songs good for running, studying, or relaxing
+run_songs = clean_df.filter(col("Good for Running") == 1)
+study_songs = clean_df.filter(col("Good for Work/Study") == 1)
+relax_songs = clean_df.filter(col("Good for Relaxation/Meditation") == 1)
+
+# calculate emotion distributions
+run_emotions = run_songs.groupBy("emotion").count()
+study_emotions = study_songs.groupBy("emotion").count()
+relax_emotions = relax_songs.groupBy("emotion").count()
+
+# convert final emotion_counts dataframes into csv for db purposes
+# run_emotions.write.csv("run_emotion_counts.csv", header=True, mode='overwrite')
+# study_emotions.write.csv("study_emotion_counts.csv", header=True, mode='overwrite')
+# relax_emotions.write.csv("relax_emotion_counts.csv", header=True, mode='overwrite')
+
+# convert dataframe to pandas for analysis purposes
+run_pd = run_emotions.toPandas()
+study_pd = study_emotions.toPandas()
+relax_pd = relax_emotions.toPandas()
+
+# visualize emotion distributions using a bar graph
+plt.bar(run_pd['emotion'], run_pd['count'])
+plt.title('Emotion Distribution of Running Songs')
+plt.xlabel('Emotion')
+plt.ylabel('Number of Songs')
+plt.show()
+
+plt.bar(study_pd['emotion'], study_pd['count'])
+plt.title('Emotion Distribution of Study Songs')
+plt.xlabel('Emotion')
+plt.ylabel('Number of Songs')
+plt.show()
+
+plt.bar(relax_pd['emotion'], relax_pd['count'])
+plt.title('Emotion Distribution of Relaxation Songs')
+plt.xlabel('Emotion')
+plt.ylabel('Number of Songs')
+plt.show()
+
+# perform extra analysis on average tempo for each "good for ..." category
+run_tempo = run_songs.groupBy("Good for Running").avg("Tempo").show()
+study_tempo = study_songs.groupBy("Good for Work/Study").avg("Tempo").show()
+relax_tempo = relax_songs.groupBy("Good for Relaxation/Meditation").avg("Tempo").show()
+
+# convert final tempo_avg dataframes into csv for db purposes
+# run_tempo.write.csv("run_tempo_avg.csv", header=True, mode='overwrite')
+# study_tempo.write.csv("study_tempo_avg.csv", header=True, mode='overwrite')
+# relax_tempo.write.csv("relax_tempo_avg.csv", header=True, mode='overwrite')
+
+print(f"\nTask 4 Runtime: {time.time() - start_time_task4:.2f} seconds")
+
+# ---------------------------------------------------------------- TASK 5 ----------------------------------------------------------------
+# task 5 - what are the most significant features (ex: tempo, energy, danceability) that predict a song’s popularity?
 spark = SparkSession.builder \
     .appName("Spotify Correlation Task 5") \
     .getOrCreate()
@@ -280,4 +352,3 @@ plt.savefig("feature_correlation.png")
 plt.show()
 
 print(f"\nTotal script runtime: {time.time() - start_time_task5:.2f} seconds")
-#Task 5 end
