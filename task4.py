@@ -1,4 +1,4 @@
-# task 4 - what emotional tones are associated with songs that are considered "good for exercise" or "good for study"?
+# task 4 - what emotional tones are associated with songs that are considered “good for running,” “good for work/study,” and “good for relaxation/meditation”?
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import col, avg
 from pyspark.sql.types import FloatType
