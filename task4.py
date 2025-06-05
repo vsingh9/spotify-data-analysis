@@ -1,12 +1,15 @@
-# task 4 - what emotional tones are associated with songs that are considered "good for exercise" or "good for study"?
+# task 4 - what emotional tones are associated with songs that are considered “good for running,” “good for work/study,” and “good for relaxation/meditation”?
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import col, avg
 from pyspark.sql.types import FloatType
 from distutils.version import LooseVersion
 
-# imports to perform analysis and plotting
+# imports to perform analysis, plotting, and track runtime
 import pandas as pd
 import matplotlib.pyplot as plt
+import time
+
+start_time_task4 = time.time()
 
 spark = SparkSession.builder \
         .appName("Spotify Analysis Task 4") \
@@ -29,6 +32,11 @@ relax_songs = clean_df.filter(col("Good for Relaxation/Meditation") == 1)
 run_emotions = run_songs.groupBy("emotion").count()
 study_emotions = study_songs.groupBy("emotion").count()
 relax_emotions = relax_songs.groupBy("emotion").count()
+
+# convert final emotion_counts dataframes into csv for db purposes
+# run_emotions.write.csv("run_emotion_counts.csv", header=True, mode='overwrite')
+# study_emotions.write.csv("study_emotion_counts.csv", header=True, mode='overwrite')
+# relax_emotions.write.csv("relax_emotion_counts.csv", header=True, mode='overwrite')
 
 # convert dataframe to pandas for analysis purposes
 run_pd = run_emotions.toPandas()
@@ -58,3 +66,10 @@ plt.show()
 run_tempo = run_songs.groupBy("Good for Running").avg("Tempo").show()
 study_tempo = study_songs.groupBy("Good for Work/Study").avg("Tempo").show()
 relax_tempo = relax_songs.groupBy("Good for Relaxation/Meditation").avg("Tempo").show()
+
+# convert final tempo_avg dataframes into csv for db purposes
+# run_tempo.write.csv("run_tempo_avg.csv", header=True, mode='overwrite')
+# study_tempo.write.csv("study_tempo_avg.csv", header=True, mode='overwrite')
+# relax_tempo.write.csv("relax_tempo_avg.csv", header=True, mode='overwrite')
+
+print(f"\nTask 4 Runtime: {time.time() - start_time_task4:.2f} seconds")
