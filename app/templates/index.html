@@ -1,0 +1,94 @@
+<html>
+    <head>
+        <title>Spotify Analytics</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- <meta http-equiv="refresh" content="30;url=http://127.0.0.1:5000/" /> -->
+    </head>
+
+    <body>
+        <!-------------------------------------------- TASK 1 -------------------------------------------->
+        <h2>Task 1: Mailyn</h2>
+
+        <h3>Enter in a genre and emotion to find the count</h3>
+        <select id="genre-select">
+            <option value="">Loading genres...</option>
+        </select>
+        <select id="emotion-select">
+            <option value="">Loading emotions...</option>
+        </select>
+        <button onclick="fetch_genre_emotion_count()">Search</button>
+
+        <div id="data-output"></div>
+        
+        <h3>Enter in a number to generate a list of genre and emotion combinations with a count greater than.</h3>
+        <input
+            id="count-input"
+            placeholder="Type count value here..."
+        />
+        <button onclick="filter_count()">Select</button>
+
+        <div id="list-data-output"></div>
+
+        <script src="{{ url_for('static', filename='script_task1.js') }}"></script>
+
+        <!-------------------------------------------- TASK 2 -------------------------------------------->
+        <h1> ________________________________________________________ </h1>
+        <h2>Task 2: Emily</h2>
+        <h3>View The Top 10 Genre Trends</h3>
+        <button onclick="fetchAllTrends()">View Trends</button>
+        <button onclick="closeAllTrends()" style="margin-left: 1em;">Close</button>
+        <div id="all-trends-output" style="max-height: 300px; overflow-y: auto; margin-top: 1em;"></div>
+        
+        <h3>Select a Genre to View Its Peak Popularity Year</h3>
+        <select id="genre-dropdown" onchange="fetchPeakForGenre()">
+        <option value="">-- Select Genre --</option>
+        </select>
+
+        <div id="peak-output" style="margin-top: 1em;"></div>
+
+        <script src="{{ url_for('static', filename='script_task2.js') }}"></script>
+
+        <!-------------------------------------------- TASK 3 -------------------------------------------->
+        <h1> ________________________________________________________ </h1>
+        <h2>Task 3: Chloe</h2>
+        <h2>Explicit Song Popularity by Genre</h2>
+
+        <label for="genreSelect">Choose a genre:</label>
+        <select id="genreSelect" onchange="loadExplicitPopularity()">
+        <option value="">-- Select a Genre --</option>
+        </select>
+
+        <div id="explicitResults"></div>
+
+        <script src="{{ url_for('static', filename='script_task3.js') }}"></script>
+
+        <!-------------------------------------------- TASK 4 -------------------------------------------->
+        <h1> ________________________________________________________ </h1>
+        <h2>Task 4: Vaneesha</h2>
+        <h3> Select a category and emotion to find out how many songs in that category correlate to that emotion</h3>
+
+        <select id="category-dropdown">
+            <option value="">-- Select Category --</option>
+        </select>
+        <select id="emotion-dropdown">
+            <option value="">-- Select Emotion --</option>
+        </select>
+        
+        <button onclick="fetch_category_emotion_count()">Search</button>
+        <div id="task4-output"></div>
+        
+        <script src="{{ url_for('static', filename='script_task4.js') }}"></script>
+
+        <!-------------------------------------------- TASK 5 -------------------------------------------->
+        <h1> ________________________________________________________ </h1>
+        <h2>Task 5: Aanchal</h2>
+        <h3>View Feature Importance Based on Correlation</h3>
+        <button onclick="fetchFeatureImportance()">View Feature Importance</button>
+        <button onclick="clearFeatureImportance()" style="margin-left: 1em;">Clear</button>
+
+        <div id="feature-importance-output" style="margin-top: 1em; max-height: 300px; overflow-y: auto;"></div>
+
+        <script src="{{ url_for('static', filename='script_task5.js') }}"></script>
+        
+    </body>
+</html>
